@@ -11,9 +11,9 @@ import java.util.List;
  * 映射数据库中的book表
  */
 @Entity
+@Table(name = "book")
 public class Book implements Serializable{
-    @Id
-    @GeneratedValue
+
     private int id;
     private String bookname;
     private String writter;
@@ -33,6 +33,8 @@ public class Book implements Serializable{
     public Book() {
     }
 
+    @Id
+    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -142,8 +144,4 @@ public class Book implements Serializable{
     }
 
     
-
-
-
-
 }

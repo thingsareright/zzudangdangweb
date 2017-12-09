@@ -72,6 +72,10 @@ public class BookBoss implements Serializable{
     public void setSellnumber(int sellnumber) {
         this.sellnumber = sellnumber;
     }
+
+
+
+
 }
 
 class PrimaryKey implements Serializable {

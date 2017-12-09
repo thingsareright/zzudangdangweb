@@ -32,7 +32,7 @@ public class BookController {
     public List<BookToClientOfBookListForResult> bookToClientOfBookListForResults(@RequestParam("name")String name){
         List<BookToClientOfBookListForResult> bookListForResults = new ArrayList<>();
         List<Book> bookList = new ArrayList<>();
-        bookList = bookRepository.findAllByBooknameLike(name);
+        bookList = bookRepository.mySearch(name);
         if (bookList != null){
             for(Book book : bookList){
                 BookToClientOfBookListForResult listForResult = new BookToClientOfBookListForResult();

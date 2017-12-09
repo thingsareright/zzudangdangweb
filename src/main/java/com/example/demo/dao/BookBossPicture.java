@@ -55,7 +55,7 @@ public class BookBossPicture {
     }
 
 
-
+   
 }
 
 class PrimaryKeyForBookBossPicture implements Serializable {
