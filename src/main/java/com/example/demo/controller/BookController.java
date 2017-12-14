@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.bean.BookToClientOfBookListForResult;
+import com.example.demo.bean.BookToClientforSingleBook;
 import com.example.demo.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,14 @@ public class BookController {
     @Autowired
     BookBossPictureRepository bookBossPictureRepository;
 
+    @Autowired
+    BossRepository bossRepository;
+
+    /**
+     * 这个方法是根据书名来模糊查询返回所有的商品的列表
+     * @param name
+     * @return
+     */
     @RequestMapping(value = "/bookForResult")
     public List<BookToClientOfBookListForResult> bookToClientOfBookListForResults(@RequestParam("name")String name){
         List<BookToClientOfBookListForResult> bookListForResults = new ArrayList<>();
@@ -51,7 +60,7 @@ public class BookController {
                     for (BookBoss book_boss : book_bossList){
                         int book_id = listForResult.getId();
                         int boss_id = book_boss.getBossid();
-                        BookBossPicture  book_boss_picture = bookBossPictureRepository.findTopByBookidAndAndBossid(book_id,boss_id);
+                        BookBossPicture  book_boss_picture = bookBossPictureRepository.findTopByBookidAndBossid(book_id,boss_id);
                         if (book_boss_picture != null){
                              listForResult.setBoss_id(book_boss.getBossid());
                              listForResult.setBook_price(book_boss.getPrice());
@@ -65,5 +74,36 @@ public class BookController {
         return bookListForResults;
     }
 
-    
+    /**
+     * 这个方法用来根据书籍id和商家id分别从各个表中获取数据并传送
+     * @param bookid
+     * @param bossid
+     * @return
+     */
+    @RequestMapping(value = "/bookForSingle")
+    public BookToClientforSingleBook bookToClientforSingleBook(@RequestParam("bookid") int bookid,
+                                                               @RequestParam("bossid") int bossid){
+        BookToClientforSingleBook bookToClientforSingleBook = new BookToClientforSingleBook();
+        Book book = bookRepository.findById(bookid);
+        Boss boss = bossRepository.findById(bossid);
+        BookBoss bookBoss = bookBossRepository.findByBookidAndBossid(bookid, bossid);
+        List<BookBossPicture> bookBossPictures = bookBossPictureRepository.findAllByBookidAndBossid(bookid, bossid);
+        bookToClientforSingleBook.setBookid(bookid);
+        bookToClientforSingleBook.setBossid(bossid);
+        bookToClientforSingleBook.setBook_name(book.getBookname());
+        bookToClientforSingleBook.setBoss_name(boss.getBossName());
+        bookToClientforSingleBook.setPress(book.getPress());
+        bookToClientforSingleBook.setPrice(bookBoss.getPrice());
+        bookToClientforSingleBook.setWritter(book.getWritter());
+        bookToClientforSingleBook.setBoss_image(boss.getBossPicture());
+        List<String> pictureList = new ArrayList<>();
+        if (bookBossPictures != null){
+            for (BookBossPicture bookBossPicture : bookBossPictures){
+                pictureList.add(bookBossPicture.getPictureurl());
+            }
+        }
+        bookToClientforSingleBook.setImageAddressList(pictureList);
+
+        return bookToClientforSingleBook;
+    }
 }

@@ -13,4 +13,6 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value = "SELECT u FROM Book u where u.bookname like %?1%")
     List<Book> mySearch( String bookname);
+
+    Book findById(int id);
 }

@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface BookBossRepository extends JpaRepository<BookBoss, Long> {
     List<BookBoss> findAllByBookid(int id);
+
+    BookBoss findByBookidAndBossid(int boodid, int bossid);
 }
