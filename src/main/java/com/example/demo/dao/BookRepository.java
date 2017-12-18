@@ -11,8 +11,10 @@ import java.util.List;
  * Created by Administrator on 2017/12/8 0008.
  */
 public interface BookRepository extends JpaRepository<Book, Long> {
-    @Query(value = "SELECT u FROM Book u where u.bookname like %?1%")
-    List<Book> mySearch( String bookname);
+    @Query(value = "SELECT * FROM book  where bookname like CONCAT('%',:keyName,'%') limit 10", nativeQuery = true)
+    List<Book> mySearch(@Param("keyName")  String bookname);
 
     Book findById(int id);
+
+    List<Book> findByBooknameLike(String bookname);
 }

@@ -1,32 +1,32 @@
 package com.example.demo.dao;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "boss")
 public class Boss {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private int id;
+    @Column(name = "bossname")
     private String bossName;
+    @Column(name = "bosspicture")
     private String bossPicture;
 
     public Boss() {
     }
 
-    @Id
-    @Column(name = "id")
+
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int i) {
         this.id = id;
     }
 
-    @Column(name = "bossname")
     public String getBossName() {
         return bossName;
     }
@@ -35,12 +35,28 @@ public class Boss {
         this.bossName = bossName;
     }
 
-    @Column(name = "bosspicture")
     public String getBossPicture() {
         return bossPicture;
     }
 
     public void setBossPicture(String bossPicture) {
         this.bossPicture = bossPicture;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Boss boss = (Boss) o;
+        return id == boss.id &&
+                Objects.equals(bossName, boss.bossName) &&
+                Objects.equals(bossPicture, boss.bossPicture);
+    }
+
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, bossName, bossPicture);
     }
 }
