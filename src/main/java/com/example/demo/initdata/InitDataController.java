@@ -37,6 +37,10 @@ public class InitDataController {
     @RequestMapping("/initData")
     public int initData() {
 
+        List<Book> bookList = new ArrayList<>();
+        List<BookBoss> bookBossList = new ArrayList<>();
+        List<BookBossPicture> bookBossPictureList = new ArrayList<>();
+
         Book book = new Book();
         //书籍就作者和出版社变了就行
         for (int i=0; i<=9; i++){
@@ -45,7 +49,7 @@ public class InitDataController {
                     book = ConstantInit.getOneBook();
                     book.setWritter(ConstantInit.writterList.get(j));
                     book.setPress(ConstantInit.pressList.get(k));
-                    bookRepository.save(book);
+                    bookList.add(book);
                 }
             }
         }
@@ -63,16 +67,21 @@ public class InitDataController {
             Random random = new Random();
             bookBoss.setPrice(random.nextFloat()*100);
             bookBoss.setSellnumber(random.nextInt(30));
-            bookBossRepository.save(bookBoss);
+            bookBossList.add(bookBoss);
             bookBossPicture.setBookid(i);
             bookBossPicture.setBossid(bossid);
             for (int k=0; k<=4; k++) {
                 bookBossPicture.setPictureurl(ConstantInit.getOnePictureUrl());
-                bookBossPictureRepository.save(bookBossPicture);
+                bookBossPictureList.add(bookBossPicture);
             }
             bossid++;
         }
 
+
+        //批量填充上述各表
+        bookRepository.save(bookList);
+        bookBossRepository.save(bookBossList);
+        bookBossPictureRepository.save(bookBossPictureList);
 
         //填充boss表
 

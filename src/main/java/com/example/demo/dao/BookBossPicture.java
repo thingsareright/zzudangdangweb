@@ -4,6 +4,7 @@ import org.dom4j.tree.AbstractEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Created by Administrator on 2017/12/8 0008.
@@ -55,7 +56,21 @@ public class BookBossPicture {
     }
 
 
-   
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookBossPicture that = (BookBossPicture) o;
+        return bookid == that.bookid &&
+                bossid == that.bossid &&
+                Objects.equals(pictureurl, that.pictureurl);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(bookid, bossid, pictureurl);
+    }
 }
 
 class PrimaryKeyForBookBossPicture implements Serializable {
@@ -69,6 +84,12 @@ class PrimaryKeyForBookBossPicture implements Serializable {
 
 
     public PrimaryKeyForBookBossPicture() {
+    }
+
+    public PrimaryKeyForBookBossPicture(int bookid, int bossid, String pictureurl) {
+        this.bookid = bookid;
+        this.bossid = bossid;
+        this.pictureurl = pictureurl;
     }
 
     public int getBookid() {

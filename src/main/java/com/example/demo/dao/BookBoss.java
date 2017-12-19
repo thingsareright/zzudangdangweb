@@ -26,6 +26,8 @@ public class BookBoss implements Serializable{
     public BookBoss() {
     }
 
+
+
     @Id
     @Column(insertable=false,updatable=false)
     public int getBookid() {
@@ -85,6 +87,11 @@ class PrimaryKey implements Serializable {
 
 
     public PrimaryKey() {
+    }
+
+    public PrimaryKey(int bookid, int bossid) {
+        this.bookid = bookid;
+        this.bossid = bossid;
     }
 
     public int getBookid() {

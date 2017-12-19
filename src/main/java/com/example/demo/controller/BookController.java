@@ -38,10 +38,12 @@ public class BookController {
      * @return
      */
     @RequestMapping(value = "/bookForResult")
-    public List<BookToClientOfBookListForResult> bookToClientOfBookListForResults(@RequestParam("name")String name){
+    public List<BookToClientOfBookListForResult> bookToClientOfBookListForResults(@RequestParam("name")String name,
+                                                                                  @RequestParam(value = "begin",defaultValue = "0")int begin,
+                                                                                  @RequestParam(value = "range", defaultValue = "10")int range){
         List<BookToClientOfBookListForResult> bookListForResults = new ArrayList<>();
         List<Book> bookList = new ArrayList<>();
-        bookList = bookRepository.mySearch(name);
+        bookList = bookRepository.mySearch(name,begin, range);
         if (bookList != null){
             for(Book book : bookList){
                 BookToClientOfBookListForResult listForResult = new BookToClientOfBookListForResult();
