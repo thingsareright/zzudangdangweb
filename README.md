@@ -305,7 +305,7 @@
     ```
     
     --------
-    文档书写人：thiongsareright
+    文档书写人：thingsareright
     日期：2017/12/20 0:22
     
     
