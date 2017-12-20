@@ -1,12 +1,17 @@
 package com.example.demo.initdata;
 
 import com.example.demo.dao.*;
-import org.aspectj.apache.bcel.classfile.Constant;
+import com.example.demo.dao.initData.BookBossPictureDaoImpl;
+import org.hibernate.FlushMode;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,6 +34,8 @@ public class InitDataController {
 
     @Autowired
     BossRepository bossRepository;
+
+
 
     /**
      * 这个是初始化数据用的，用之前要先建好数据库good，成功则返回1，否则返回0
@@ -73,6 +80,7 @@ public class InitDataController {
             for (int k=0; k<=4; k++) {
                 bookBossPicture.setPictureurl(ConstantInit.getOnePictureUrl());
                 bookBossPictureList.add(bookBossPicture);
+                bookBossPictureRepository.save(bookBossPicture);
             }
             bossid++;
         }
@@ -81,10 +89,11 @@ public class InitDataController {
         //批量填充上述各表
         bookRepository.save(bookList);
         bookBossRepository.save(bookBossList);
-        bookBossPictureRepository.save(bookBossPictureList);
+
+
+
 
         //填充boss表
-
         int i=1;
         List<Boss> bosses = new ArrayList<>();
         while (i<=15){
@@ -100,5 +109,11 @@ public class InitDataController {
 
         return 1;
     }
+
+
+
+
+
+
 
 }

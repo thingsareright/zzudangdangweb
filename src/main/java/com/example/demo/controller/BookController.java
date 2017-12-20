@@ -38,7 +38,7 @@ public class BookController {
      * @return
      */
     @RequestMapping(value = "/bookForResult")
-    public List<BookToClientOfBookListForResult> bookToClientOfBookListForResults(@RequestParam("name")String name,
+    public List<BookToClientOfBookListForResult> bookToClientOfBookListForResults(@RequestParam(value = "name",defaultValue = "MySQL")String name,
                                                                                   @RequestParam(value = "begin",defaultValue = "0")int begin,
                                                                                   @RequestParam(value = "range", defaultValue = "10")int range){
         List<BookToClientOfBookListForResult> bookListForResults = new ArrayList<>();
