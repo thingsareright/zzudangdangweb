@@ -1,15 +1,12 @@
 package com.example.demo.dao.initData;
 
-import com.example.demo.dao.BookBossPicture;
+import com.example.demo.dao.entity.BookBossPicture;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 

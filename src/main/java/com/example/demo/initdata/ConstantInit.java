@@ -1,6 +1,6 @@
 package com.example.demo.initdata;
 
-import com.example.demo.dao.Book;
+import com.example.demo.dao.entity.Book;
 
 import java.util.ArrayList;
 import java.util.List;

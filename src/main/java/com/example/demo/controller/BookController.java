@@ -3,8 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.bean.BookToClientOfBookListForResult;
 import com.example.demo.bean.BookToClientforSingleBook;
 import com.example.demo.dao.*;
+import com.example.demo.dao.entity.Book;
+import com.example.demo.dao.entity.BookBoss;
+import com.example.demo.dao.entity.BookBossPicture;
+import com.example.demo.dao.entity.Boss;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,7 +65,7 @@ public class BookController {
                     for (BookBoss book_boss : book_bossList){
                         int book_id = listForResult.getId();
                         int boss_id = book_boss.getBossid();
-                        BookBossPicture  book_boss_picture = bookBossPictureRepository.findTopByBookidAndBossid(book_id,boss_id);
+                        BookBossPicture book_boss_picture = bookBossPictureRepository.findTopByBookidAndBossid(book_id,boss_id);
                         if (book_boss_picture != null){
                              listForResult.setBoss_id(book_boss.getBossid());
                              listForResult.setBook_price(book_boss.getPrice());
