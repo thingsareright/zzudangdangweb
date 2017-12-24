@@ -24,9 +24,9 @@
     运行。
     这个时候读者就可以通过访问本地服务器来初始化数据和查询操作了（这里的服务器是指项目里spring boot框架内嵌的Tomcat服务器）。
     
-    通过访问[http://127.0.0.1:5002/book/initData](http://127.0.0.1:5002/book/initData)即可进行初始化数据，如果初始化成功，那么会返回1。
+    通过访问[http://127.0.0.1:5003/book/initData](http://127.0.0.1:5003/book/initData)即可进行初始化数据，如果初始化成功，那么会返回1。
     
-    通过访问[http://127.0.0.1:5002/book/bookForResult](http://127.0.0.1:5002/book/bookForResult)就可以调用模糊查找某书名的所有书的数据接口。
+    通过访问[http://127.0.0.1:5003/book/bookForResult](http://127.0.0.1:5003/book/bookForResult)就可以调用模糊查找某书名的所有书的数据接口。
     如果想获得数据，那么就要通过向这个接口发送一个GET请求，这个请求里要有三个参数（数据库里满足条件的元组集合记为A)：
     - name： 书名，默认是MySQL
     - begin: 一个整数（int），默认是0
@@ -185,7 +185,7 @@
 
     ```
     
-    通过访问[http://127.0.0.1:5002/book/bookForSingle](http://127.0.0.1:5002/book/bookForSingle)就可以查找某本商家卖的某本书的详情。
+    通过访问[http://127.0.0.1:5003/book/bookForSingle](http://127.0.0.1:5003/book/bookForSingle)就可以查找某本商家卖的某本书的详情。
     如果想获得数据，那么就要通过向这个接口发送一个GET请求，这个请求里要有两个参数)：
     - bookid: 一个整数（int），书籍id
     - bossid： 一个整数（int），商家id
@@ -303,10 +303,38 @@
 
 
     ```
-    
-    --------
-    文档书写人：thingsareright
+    文档书写人：thiongsareright
     日期：2017/12/20 0:22
+    
+    ------
+    今天主要是对数据库进行了调优和整理乱码的工作，现在总结如下。
+碰到的两个问题：
+- 数据库中中文乱码的问题
+- 进行查询的调优
+
+    ### 数据库中文乱码的问题
+    我是一直都支持UTF8编码的，那么数据库里怎么保持utf8编码呢？
+    我们都知道，数据库如何设置字符集和校对集呢？
+    如果你只是想通过修改默认字符集和校对集的方式进行修改，那么你可以参考下面的[链接](http://www.jb51.net/article/92802.htm)。
+    
+    ### 查询的调优
+    原来，我们在BookRepository中自定义的分页模糊查询是这样的：
+    ```
+    @Query(value = "SELECT * FROM book  where bookname like CONCAT('%',?1,'%')  limit ?2,?3", nativeQuery = true)
+     List<Book> mySearch( String bookname,int begin, int range);
+    ```
+    后来，我发现这样在分页的基数比较大，也就是begin比较大时，效率太低，于是我选择了下面的优化方案：
+    ```
+     @Query(value = "SELECT * FROM book WHERE id > (SELECT id FROM book WHERE bookname like CONCAT('%',?1,'%') LIMIT ?2,1) LIMIT ?3", nativeQuery = true)
+     List<Book> mySearch( String bookname,int begin, int range);
+    ```
+    这种方法为什么能进行优化呢？详情请参考[链接](http://www.jb51.net/article/85312.htm)。
+    在这里要注意，要在id和bookname两个字段上加上索引，这样，才会更有效率。
+    
+    ---
+    2017/12/20 22：29 thingsareright
+
+  
     
     
     
