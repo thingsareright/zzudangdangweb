@@ -72,7 +72,7 @@ public class ShopCartController {
                 if ((orderList.get(j).getBossid()) == (storeInfo.getId())){
                     goodsInfoList.add(
                             new GoodsInfo(orderList.get(j).getBookid(), orderList.get(j).getBookname(), orderList.get(j).getPrice(),
-                                    orderList.get(j).getPrice() + new Random().nextInt(1500)/100, ""+1555 + new Random().nextInt(3000), orderList.get(j).getBookpicture(), 9));
+                                    orderList.get(j).getPrice() + new Random().nextInt(1500)/100, ""+1555 + new Random().nextInt(3000), orderList.get(j).getBookpicture(), orderList.get(j).getNumber(),0));
                 }
                 childs.put(storeInfo.getId(), goodsInfoList);
             }
