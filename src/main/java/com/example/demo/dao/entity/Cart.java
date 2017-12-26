@@ -6,9 +6,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "good.order")
+@Table(name = "cart")
 @IdClass(PrimaryKeyForOrder.class)
-public class Order {
+public class Cart {
 
     private int bookid;
     private int bossid;
@@ -20,10 +20,10 @@ public class Order {
     private String bookpicture;
     private String bosspicture;
 
-    public Order() {
+    public Cart() {
     }
 
-    public Order(int bookid, int bossid, String phone, int number, float price, String bookname, String bossname, String bookpicture, String bosspicture) {
+    public Cart(int bookid, int bossid, String phone, int number, float price, String bookname, String bossname, String bookpicture, String bosspicture) {
         this.bookid = bookid;
         this.bossid = bossid;
         this.phone = phone;
