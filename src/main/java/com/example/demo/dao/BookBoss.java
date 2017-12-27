@@ -1,7 +1,12 @@
-package com.example.demo.dao.entity;
+package com.example.demo.dao;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.apache.catalina.LifecycleState;
+import org.dom4j.tree.AbstractEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/8 0008.

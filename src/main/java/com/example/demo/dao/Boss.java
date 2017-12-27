@@ -1,4 +1,4 @@
-package com.example.demo.dao.entity;
+package com.example.demo.dao;
 
 import javax.persistence.*;
 import java.util.Objects;

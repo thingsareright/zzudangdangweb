@@ -1,4 +1,6 @@
-package com.example.demo.dao.entity;
+package com.example.demo.dao;
+
+import org.dom4j.tree.AbstractEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
