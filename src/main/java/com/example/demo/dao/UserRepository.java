@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<User,String> {
 
     @Query(value = "select password from user where phone = :phone",nativeQuery = true)
     String findPasswordByPhone(@Param("phone") String phone);
+
+    User findTopByPhone(String phone);
 }
