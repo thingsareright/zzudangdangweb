@@ -51,6 +51,12 @@
 			<artifactId>sms</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.hateoas</groupId>
+			<artifactId>spring-hateoas</artifactId>
+			<version>0.17.0.RELEASE</version>
+		</dependency>
 	</dependencies>
 
 	<build>
