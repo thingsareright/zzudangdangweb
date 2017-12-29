@@ -57,6 +57,8 @@
 			<artifactId>spring-hateoas</artifactId>
 			<version>0.17.0.RELEASE</version>
 		</dependency>
+
+
 	</dependencies>
 
 	<build>

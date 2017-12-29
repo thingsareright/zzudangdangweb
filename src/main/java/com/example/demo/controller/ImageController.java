@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.example.demo.bean.Image;
+import com.example.demo.dao.UserRepository;
+import com.example.demo.dao.entity.User;
+import com.example.demo.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,63 +24,36 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import sun.rmi.runtime.Log;
 
 @RestController
 @RequestMapping("/image")
 public class ImageController {
 
-    public static final String ROOT = "upload-dir";
-
-    private final ResourceLoader resourceLoader;
-
     @Autowired
-    public ImageController(ResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
-    }
+    UserRepository userRepository;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/")
-    public String provideUploadInfo(Model model) throws IOException {
-
-        model.addAttribute("files", Files.walk(Paths.get(ROOT))
-                .filter(path -> !path.equals(Paths.get(ROOT)))
-                .map(path -> Paths.get(ROOT).relativize(path))
-                .map(path -> linkTo(methodOn(ImageController.class).getFile(path.toString())).withRel(path.toString()))
-                .collect(Collectors.toList()));
-
-        return "uploadForm";
-    }
-
-    //显示图片的方法关键 匹配路径像 localhost:8080/b7c76eb3-5a67-4d41-ae5c-1642af3f8746.png
-    @RequestMapping(method = RequestMethod.GET, value = "/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<?> getFile(@PathVariable String filename) {
-
-        try {
-            return ResponseEntity.ok(resourceLoader.getResource("file:" + Paths.get(ROOT, filename).toString()));
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    //上传的方法
-    @RequestMapping(method = RequestMethod.POST, value = "/")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes, HttpServletRequest request) {
-        System.out.println("******" + file.getName());  // TODO: 2017/12/29
-        System.out.println(request.getParameter("member"));
-        if (!file.isEmpty()) {
-            try {
-                Files.copy(file.getInputStream(), Paths.get(ROOT, file.getOriginalFilename()));
-                redirectAttributes.addFlashAttribute("message",
-                        "You successfully uploaded " + file.getOriginalFilename() + "!");
-            } catch (IOException|RuntimeException e) {
-                redirectAttributes.addFlashAttribute("message", "Failued to upload " + file.getOriginalFilename() + " => " + e.getMessage());
-            }
-        } else {
-            redirectAttributes.addFlashAttribute("message", "Failed to upload " + file.getOriginalFilename() + " because it was empty");
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public String setterUserImage(@RequestBody Image image) throws IOException {
+        //获取图片的64位编码
+        String id = image.getPhone();
+        String base64 = image.getBase64();
+        //将base64位编码写入图片文件
+        System.out.println(base64);
+        boolean flag = FileUtil.generateImage(base64, id);
+        if (flag == false) {
+            System.out.println("上传文件" + id + "失败");
         }
 
-        return "redirect:/";
+        //对后台数据库进行刷新
+        User user = new User();
+        user = userRepository.findTopByPhone(id);
+        if (user == null)
+            return "";
+        user.setHead(id + ".jpg");
+        userRepository.save(user);
+        //返回图片的链接地址
+        return id + ".jpg";
     }
 
 }
