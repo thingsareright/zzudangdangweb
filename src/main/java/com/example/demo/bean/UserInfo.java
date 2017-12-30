@@ -10,11 +10,12 @@ public class UserInfo {
     private String qq;  //QQ号
     private String wechat;  //微信号
     private String email;  //邮箱号
+    private int sex;    //性别，1为男，0位女
 
     public UserInfo() {
     }
 
-    public UserInfo(String phone, String head, String nickname, String introduce, String qq, String wechat, String email) {
+    public UserInfo(String phone, String head, String nickname, String introduce, String qq, String wechat, String email,int sex) {
         this.phone = phone;
         this.head = head;
         this.nickname = nickname;
@@ -22,6 +23,7 @@ public class UserInfo {
         this.qq = qq;
         this.wechat = wechat;
         this.email = email;
+        this.sex = sex;
     }
 
     public String getPhone() {
@@ -78,5 +80,13 @@ public class UserInfo {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
     }
 }

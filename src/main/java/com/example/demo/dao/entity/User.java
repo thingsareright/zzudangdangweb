@@ -12,7 +12,7 @@ public class User {
     @Id
     private String phone;       //用户手机号，这是用户的唯一标识
     private String password;    //用户密码
-    //TODO 因为还没和九商讨，所以还没有实现全部属性
+    private int sex;            //用户性别，1位男，0为女
     private String head;        //用户的头像地址
     private String nickname;    //用户昵称
     private String introduce;   //个人介绍
@@ -92,5 +92,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
     }
 }

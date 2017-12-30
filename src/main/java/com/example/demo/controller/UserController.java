@@ -51,7 +51,7 @@ public class UserController {
         userInfo.setPhone(user.getPhone());
         userInfo.setQq(user.getQq());
         userInfo.setWechat(user.getWechat());
-
+        userInfo.setSex(user.getSex());
         return userInfo;
     }
 
@@ -182,5 +182,27 @@ public class UserController {
         return "1";
     }
 
+    /**
+     * 这个路径用于修改性别
+     * @param phone 用户手机
+     * @param password 用户密码
+     * @param sex 用户新微信号
+     * @return 返回1表示修改成功，返回0表示修改失败
+     */
+    @RequestMapping("/updateUserSex")
+    public String updateUserSex(@RequestParam(name = "phone", defaultValue = "0") String phone,
+                                   @RequestParam(name = "password", defaultValue = "0") String password,
+                                   @RequestParam(name = "sex",defaultValue = "0") int sex){
+        if (!CheckInputUtils.checkTel(phone) || phone.equals("0") || password.equals("0")) {
+            return "0";
+        }
 
+        User user = userRepository.findByPhoneAndPassword(phone, password);
+        if (user == null)
+            return "0";
+
+        user.setSex(sex==0?0:1);
+        userRepository.save(user);
+        return "1";
+    }
 }
