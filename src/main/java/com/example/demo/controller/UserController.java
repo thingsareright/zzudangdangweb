@@ -6,10 +6,7 @@ import com.example.demo.dao.entity.User;
 import com.example.demo.util.CheckInputUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/User")
@@ -22,6 +19,13 @@ public class UserController {
     public void updateUser(@RequestBody User user){
 
         userRepository.saveAndFlush(user);
+
+    }
+
+    @RequestMapping("/changePassword/{phone}/{password}")
+    public void changePassword(@PathVariable("phone") String phone,
+                                @PathVariable("password") String password){
+        userRepository.changePassword(phone,password);
 
     }
 
