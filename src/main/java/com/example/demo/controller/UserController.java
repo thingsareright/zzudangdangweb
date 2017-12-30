@@ -29,6 +29,14 @@ public class UserController {
 
     }
 
+    @RequestMapping("/registerUser/{phone}/{password}")
+    public void registerUser(@PathVariable("phone") String phone,
+                               @PathVariable("password") String password){
+        User user = new User(phone,password);
+        userRepository.save(user);
+
+    }
+
     /**
      * 用户向用户返回用户非机密信息
      * @param phone 用户ID
