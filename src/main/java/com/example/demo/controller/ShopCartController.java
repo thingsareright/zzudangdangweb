@@ -4,7 +4,7 @@ import com.example.demo.bean.GoodsInfo;
 import com.example.demo.bean.ShopCart;
 import com.example.demo.bean.StoreInfo;
 import com.example.demo.dao.*;
-import com.example.demo.dao.entity.Cart;
+import com.example.demo.dao.entity.*;
 import com.example.demo.util.CheckInputUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -82,5 +82,49 @@ public class ShopCartController {
         shopCart.setChilds(childs);
 
         return shopCart;
+    }
+
+    @RequestMapping("/insertShopCart")
+    public int insertShopCart(@RequestParam(name = "phone", defaultValue = "0")String phone,
+                              @RequestParam(name = "bookid", defaultValue = "0")int bookid,
+                              @RequestParam(name = "bossid", defaultValue = "0")int bossid,
+                              @RequestParam(name = "num", defaultValue = "0") int num) {
+        if (!CheckInputUtils.checkTel(phone) || bookid == 0 || bossid == 0)
+            return 0;
+
+        Book book = bookRepository.findById(bookid);
+        BookBoss bookBoss = bookBossRepository.findByBookidAndBossid(bookid, bossid);
+        BookBossPicture bookBossPicture = bookBossPictureRepository.findTopByBookidAndBossid(bookid, bossid);
+        Boss boss = bossRepository.findById(bossid);
+
+        //先判断服务器里是不是有且仅有这么一条记录
+        List<Cart> cartList = cartRepository.findAllByPhoneAndBookidAndBossid(phone, bookid, bossid);
+        if (cartList != null & cartList.size() == 1){
+            cartList.get(0).setNumber(cartList.get(0).getNumber() + 1);
+            cartList.get(0).setBossname(boss.getBossName());
+            cartList.get(0).setBosspicture(boss.getBossPicture());
+            cartList.get(0).setPrice(bookBoss.getPrice());
+            cartList.get(0).setBookname(book.getBookname());
+            cartList.get(0).setBookpicture(bookBossPicture.getPictureurl());
+            cartRepository.save(cartList.get(0));
+        } else {
+            //否则则选择插入
+            Cart cart = new Cart();
+            cart.setBookid(bookid);
+            cart.setBossid(bossid);
+            cart.setPhone(phone);
+
+
+
+            cart.setNumber(1);
+            cart.setBossname(boss.getBossName());
+            cart.setBosspicture(boss.getBossPicture());
+            cart.setPrice(bookBoss.getPrice());
+            cart.setBookname(book.getBookname());
+            cart.setBookpicture(bookBossPicture.getPictureurl());
+            cartRepository.save(cart);
+        }
+
+        return 1;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.dao.entity;
 
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -112,6 +113,8 @@ public class Cart {
     public void setBosspicture(String bosspicture) {
         this.bosspicture = bosspicture;
     }
+
+
 
 
 }

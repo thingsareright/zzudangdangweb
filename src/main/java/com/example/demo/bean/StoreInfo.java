@@ -1,6 +1,7 @@
 package com.example.demo.bean;
 
-/**
+
+ /**
  * Created by Administrator on 2017/3/26.
  * 店铺信息
  */
@@ -14,14 +15,14 @@ public class StoreInfo {
     private boolean ActionBarEditor;// 全局对该组的编辑状态
     private int flag;
 
-    public StoreInfo() {
-    }
 
     public StoreInfo(int id, String name, String bosspicture) {
         this.id = id;
         this.name = name;
         this.bosspicture = bosspicture;
     }
+
+
 
     public int getId() {
         return id;

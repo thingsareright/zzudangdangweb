@@ -1,6 +1,6 @@
 package com.example.demo.bean;
 
-/**
+ /**
  * Created by Administrator on 2017/3/26.
  * 商品信息
  */
@@ -29,6 +29,7 @@ public class GoodsInfo {
         this.goodsImg = goodsImg;
         this.number = number;
     }
+
 
 
 

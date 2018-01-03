@@ -11,4 +11,6 @@ public interface CartRepository extends JpaRepository<Cart,Long> {
 
     List<Cart> findAllByPhoneAndBossid(String phone, int bossid);
 
+    List<Cart> findAllByPhoneAndBookidAndBossid(String phone, int bookid, int bossid);
+
 }
