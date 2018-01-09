@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "cart")
-@IdClass(PrimaryKeyForOrder.class)
+@IdClass(PrimaryKeyForCart.class)
 public class Cart {
 
     private int bookid;
@@ -24,7 +24,7 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(int bookid, int bossid, String phone, int number, float price, String bookname, String bossname, String bookpicture, String bosspicture) {
+    public Cart(int bookid, int bossid, String phone, int number, float price, String bookname, String bossname, String bookpicture, String bosspicture, int flag) {
         this.bookid = bookid;
         this.bossid = bossid;
         this.phone = phone;
@@ -116,17 +116,16 @@ public class Cart {
 
 
 
-
 }
 
-class PrimaryKeyForOrder implements Serializable {
+class PrimaryKeyForCart implements Serializable {
 
     private int bookid;
     private int bossid;
     private String phone;
 
 
-    public PrimaryKeyForOrder() {
+    public PrimaryKeyForCart() {
     }
 
 
@@ -159,7 +158,7 @@ class PrimaryKeyForOrder implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PrimaryKeyForOrder that = (PrimaryKeyForOrder) o;
+        PrimaryKeyForCart that = (PrimaryKeyForCart) o;
         return bookid == that.bookid &&
                 bossid == that.bossid &&
                 Objects.equals(phone, that.phone);

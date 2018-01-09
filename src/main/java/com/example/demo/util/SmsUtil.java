@@ -11,9 +11,9 @@ import java.util.ArrayList;
 public class SmsUtil {
 
     //下面是一些必要的变量设置，这是机密，不能外传
-    private static final int APPID =0;
-    private static final String APPKEY = "0";
-    private static final int SENDCODE =0;       //腾讯云验证码模板
+    private static final int APPID =1400045100;
+    private static final String APPKEY = "138423efdb3e0dcb8669e0d1c6abc493";
+    private static final int SENDCODE =49912;       //腾讯云验证码模板
 
 
     /**
