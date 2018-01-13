@@ -60,7 +60,7 @@ public class OrderController {
             return orderCart;
         for (int i=0; i<orderList.size(); i++) {
             StoreInfo storeInfo = new StoreInfo( orderList.get(i).getBossid(),
-                    orderList.get(i).getBookname(), orderList.get(i).getBosspicture());
+                    orderList.get(i).getBossname(), orderList.get(i).getBosspicture());
             if (!groups.contains(storeInfo)){
                 groups.add(storeInfo);
             }

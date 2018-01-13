@@ -213,7 +213,7 @@ public class UserController {
         if (user == null)
             return "0";
 
-        user.setSex(sex==0?0:1);
+        user.setSex(sex);
         userRepository.save(user);
         return "1";
     }

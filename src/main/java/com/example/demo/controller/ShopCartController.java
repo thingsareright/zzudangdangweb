@@ -59,7 +59,7 @@ public class ShopCartController {
             return shopCart;
         for (int i=0; i<cartList.size(); i++) {
             StoreInfo storeInfo = new StoreInfo( cartList.get(i).getBossid(),
-                    cartList.get(i).getBookname(), cartList.get(i).getBosspicture());
+                    cartList.get(i).getBossname(), cartList.get(i).getBosspicture());
             if (!groups.contains(storeInfo)){
                 groups.add(storeInfo);
             }
