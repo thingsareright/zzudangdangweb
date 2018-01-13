@@ -89,7 +89,7 @@ public class OrderController {
     public int insertShopCart(@RequestParam(name = "phone", defaultValue = "0")String phone,
                               @RequestParam(name = "bookid", defaultValue = "0")int bookid,
                               @RequestParam(name = "bossid", defaultValue = "0")int bossid,
-                              @RequestParam(name = "num", defaultValue = "0") int num) {
+                              @RequestParam(name = "num", defaultValue = "1") int num) {
         if (!CheckInputUtils.checkTel(phone) || bookid == 0 || bossid == 0)
             return 0;
 
@@ -101,7 +101,7 @@ public class OrderController {
         //先判断服务器里是不是有且仅有这么一条记录
         List<Order> orderList = orderRepository.findAllByPhoneAndBookidAndBossid(phone, bookid, bossid);
         if (orderList != null & orderList.size() == 1){
-            orderList.get(0).setNumber(orderList.get(0).getNumber() + 1);
+            orderList.get(0).setNumber(orderList.get(0).getNumber() + num);
             orderList.get(0).setBossname(boss.getBossName());
             orderList.get(0).setBosspicture(boss.getBossPicture());
             orderList.get(0).setPrice(bookBoss.getPrice());
